@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Record } from './records.interface';
@@ -12,7 +12,18 @@ async findAll():Promise<any>{
 }
 
 async findOne(id: string): Promise<any> {
-    return await this.recordModel.findOne({_id:id});
+    try{
+    var storeRecord =  await this.recordModel.findOne({_id:id});
+    if(!storeRecord){
+        throw new HttpException(`Records Not Found `,HttpStatus.NOT_FOUND);
+    }
+    else {
+        return storeRecord;
+    }
+    }
+    catch(err){
+        throw new HttpException(`Error ${err.message}`,HttpStatus.BAD_REQUEST);
+    }
 }
 async create(record: Record): Promise<any> {
     var flagCheck=false;
@@ -72,8 +83,17 @@ async create(record: Record): Promise<any> {
         return Errors;
     }
     else {
+        try {
     const newRecord  = new this.recordModel(record);
+    if(!newRecord){
+        throw new HttpException(`Could not post request `,HttpStatus.BAD_REQUEST);
+    }
+    else {
     return await newRecord.save();
+    }
+        }catch(err){
+            throw new HttpException(`Error: ${err.message}`,HttpStatus.NOT_FOUND);
+        }
     }
 }
 async delete(id:string):Promise<any> {
