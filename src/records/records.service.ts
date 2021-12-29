@@ -31,18 +31,18 @@ async create(record: Record): Promise<any> {
     //console.log(str2);
     record.name=str2;
     // to capitalize the first letter of father's name
-    if(record.father_name==""){
+    if(record.fatherName==""){
         flagCheck=true;
         Errors.push({msg:"Father's Name cannot be empty"});
     }
-    tempName = record.father_name;
+    tempName = record.fatherName;
     arr = tempName.split(" ");
     for (var i = 0; i < arr.length; i++) {
         arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
     }
     str2 = arr.join(" ");
     //console.log(str2);
-    record.father_name=str2;
+    record.fatherName=str2;
     // checking age 
     if(record.age.toString()==""){
         flagCheck=true;
@@ -62,7 +62,7 @@ async create(record: Record): Promise<any> {
         Errors.push({msg:"Address cannot be empty"});
     }
     // Contact Number
-    var tempContactNumber  = record.contact_no;
+    var tempContactNumber  = record.contactNumber;
     if(tempContactNumber.toString().length != 10){
         flagCheck = true;
         Errors.push({msg:"Invalid Contact Number"});

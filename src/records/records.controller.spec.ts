@@ -40,13 +40,13 @@ describe('RecordsController', () => {
   
 
   it('should create a Record ', ()=> {
-    const dto = {"name":"saurabh kumar","age":24,"father_name":"mantoon ", "address":"kv 7","contact_no":9915};
+    const dto = {"name":"saurabh kumar","age":24,"fatherName":"mantoon ", "address":"kv 7","contactNumber":9915};
     expect(controller.create(dto)).toEqual({
       _id: expect.any(Number),
       name:dto.name,
-      father_name:dto.father_name,
+      father_name:dto.fatherName,
       address:dto.address,
-      contact_no:dto.contact_no,
+      contact_no:dto.contactNumber,
       age:dto.age
 
     })
