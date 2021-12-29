@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import 'dotenv/config';
 const express  = require('express');
 
 const app = express();

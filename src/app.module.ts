@@ -7,11 +7,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 //import { RecordsController } from './records/records.controller';
 //import { RecordsService } from './records/records.service';
 import { RecordsModule } from './records/records.module';
-import keys from './config/keys';
+require('dotenv').config();
 
+let mongoconfig = process.env.mongoURI;
 @Module({
   imports: [
-   RecordsModule,MongooseModule.forRoot(keys.mongoURI)
+   RecordsModule,MongooseModule.forRoot(process.env.mongoURI)
 
   ],
   controllers: [AppController],
