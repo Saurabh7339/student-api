@@ -74,9 +74,4 @@ export class RecordsController {
     delete(@Param('id')id) : any {
         return this.recordsService.delete(id);
     }
-
-    @Put(':id')
-    update(@Body() record: Record, @Param('id') id ): any {
-        return `Update ${id} - Name ${record.name}`;
-    }
 }

@@ -8,7 +8,21 @@ export class RecordsService {
 constructor(@InjectModel('Record') private readonly recordModel : Model<Record>) {}    
  
 async findAll():Promise<any>{
-    return await this.recordModel.find({});
+    try {
+    var allRecords =  await this.recordModel.find({});
+    if(!allRecords) {
+        throw new HttpException('Could not fetch records', HttpStatus.NOT_FOUND);
+    }
+    if(allRecords.length==0) {
+        return "There are'nt any Records in the DataBase";
+    }
+    else {
+        return allRecords;
+    }
+
+    } catch(err) {
+        throw err;
+    }
 }
 
 async findOne(id: string): Promise<any> {
@@ -22,7 +36,7 @@ async findOne(id: string): Promise<any> {
     }
     }
     catch(err){
-        throw new HttpException(`Error ${err.message}`,HttpStatus.BAD_REQUEST);
+        throw err;
     }
 }
 async create(record: Record): Promise<any> {
@@ -92,7 +106,7 @@ async create(record: Record): Promise<any> {
     return await newRecord.save();
     }
         }catch(err){
-            throw new HttpException(`Error: ${err.message}`,HttpStatus.NOT_FOUND);
+            throw err;
         }
     }
 }
@@ -103,7 +117,7 @@ async delete(id:string):Promise<any> {
 
  async search(param) :Promise<any> {
     var data  = await this.recordModel.find(param);
-    if((await data).length!=0){
+    if(data.length!=0){
         return  data;
     }
     else {
